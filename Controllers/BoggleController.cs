@@ -21,20 +21,22 @@ namespace BoggleWebApi.Controllers
 
         public BoggleController(IBoggleService boggleService)
         {
+            //do null check to ensure _boggleService is never null
             _boggleService = boggleService ?? throw new ArgumentNullException(nameof(boggleService));
 
         }
 
 
-
+        //Get a new boggleboard
         [HttpGet("GetBoggleBoard")]
         public BoggleBoard GetBoggleBoard() => _boggleService.GetBoggleBoard();
 
+        //Get the boggleboard by Id
         [HttpGet("GetBoggleBoard{BoggleBoardId}")]
         public ActionResult<BoggleBoard> GetBoggleBoard(Guid BoggleBoardId)
         {
             var BoggleBoard = _boggleService.GetBoggleBoard(BoggleBoardId);
-
+            //In case there arent any boggleboards yet
             if (BoggleBoard == null)
             {
                 return NotFound();
@@ -42,7 +44,7 @@ namespace BoggleWebApi.Controllers
 
             return BoggleBoard;
         }
-
+        //Determines if the word is valid by checking if it is present on the board, it exists in the dutch language and has the correct length
         [HttpGet("IsValidWord/{BoggleBoardId}/{word}")]
         public bool IsValidWord(Guid BoggleBoardId, string word)
         {
@@ -59,7 +61,7 @@ namespace BoggleWebApi.Controllers
             }   
 
         }
-
+        //Get the score for a word, based on official boggle rules
         [HttpGet("ScoreWord/{word}")]
         public int ScoreWord(string word)
         {

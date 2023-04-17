@@ -7,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 //builder.Services.AddDbContext<ApiContext>
 //(opt => opt.UseInMemoryDatabase("BoggleDb"));
+
+//ads services and routing logic so controllers/actions can handle requests.
 builder.Services.AddControllers();
 builder.Services.AddScoped<IBoggleService, BoggleService>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -21,6 +23,7 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
                                 "http://localhost:4200",
                                 "http://127.0.0.1:8080",
                                 "http://127.0.0.1:5000",
+                                "http://127.0.0.1:5500",
                                 "http://127.0.0.1:4200"
                               )
                             .AllowAnyHeader()
